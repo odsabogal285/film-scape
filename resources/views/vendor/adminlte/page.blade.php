@@ -3,6 +3,7 @@
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 
 @section('adminlte_css')
+    <link rel="stylesheet" href="{{ asset('app.css') }}">
     @stack('css')
     @yield('css')
 @stop

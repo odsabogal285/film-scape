@@ -21,4 +21,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/recommendation', [RecommendationController::class, 'index'])->name('home');
+Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
+Route::get('/list-movies', [RecommendationController::class, 'listMovies'])->name('list-movies');
+Route::post('/update-favorite', [RecommendationController::class, 'updateFavorite'])->name('update-favorite');
+
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
