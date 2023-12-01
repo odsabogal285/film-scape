@@ -4,6 +4,7 @@
 
 @section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('app.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
     @stack('css')
     @yield('css')
 @stop

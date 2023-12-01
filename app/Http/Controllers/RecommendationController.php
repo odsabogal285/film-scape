@@ -36,6 +36,7 @@ class RecommendationController extends Controller
 
             // todo pasar esto a un servicio
             $movies_query =  $this->movieRepository->getMoviesIds(collect($movies)->pluck('id'));
+            $movies_user=  $this->userRepository->getMovies(Auth::user());
 
             foreach ($movies as $movie) {
                 $movies_query->where('id', $movie->id)->first();
@@ -48,6 +49,14 @@ class RecommendationController extends Controller
                         'qualification' => $movie->vote_average
                     ]);
                     $this->movieRepository->save($movie_repository);
+                }
+            }
+
+            if ($movies_user->count() > 0) {
+                foreach ($movies as $movie) {
+                    if ($movies_user->where('id', $movie->id)->first()) {
+                        $movie->checked = true;
+                    }
                 }
             }
 

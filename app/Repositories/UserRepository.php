@@ -20,5 +20,10 @@ class UserRepository extends BaseRepository
     public function detach_movies (User $user, $id_movies)
     {
         return $user->movies()->detach($id_movies);
+
+    }
+    public function getMovies(User $user)
+    {
+        return $user->movies()->get();
     }
 }

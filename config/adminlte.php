@@ -329,6 +329,11 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
+            'text' => 'Favorites',
+            'url'  => 'favorite',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
@@ -494,6 +499,26 @@ return [
                 ],
             ],
         ],
+        'Fontawesome' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//kit.fontawesome.com/1727dcd627.js',
+                ],
+            ],
+        ],
+        'Infinite Scroll' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.jss',
+                ],
+            ],
+        ]
     ],
 
     /*

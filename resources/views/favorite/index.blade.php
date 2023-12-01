@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Recomendaciones')
+@section('title', 'Favoritos')
 
 @section('content_header')
-    <h1>Recomendaciones</h1>
+    <h1>Favoritos</h1>
 @stop
 
 @push('css')
@@ -21,17 +21,17 @@
             position: relative;
             text-align: center;
             transform: rotate(20deg);
-          }
+        }
         .point-burst:before {
-              content: "";
-              position: absolute;
-              top: 0;
-              left: 0;
-              height: 40px;
-              width: 40px;
-              background: #333;
-              transform: rotate(135deg);
-          }
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 40px;
+            width: 40px;
+            background: #333;
+            transform: rotate(135deg);
+        }
 
         .heart {
             /* Modify size here: */
@@ -61,23 +61,23 @@
 @push('js')
     <script>
         // Mirar como validar lo del data-type in l9
-       let pagina = 2;
-       const loading = document.getElementById('loading');
-       window.onscroll = () => {
-           loading.removeAttribute('hidden');
-           if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-               fetch(`/list-movies?page=${pagina}`, {
-                  method: 'get'
-               })
-                   .then(response => response.text())
-                   .then(html => {
-                       loading.setAttribute('hidden', '');
-                       document.getElementById('movies').innerHTML += html;
-                       pagina++;
-                   })
-                   .catch(error => console.log(error))
-           }
-       }
+        /*let pagina = 2;
+        const loading = document.getElementById('loading');
+        window.onscroll = () => {
+            loading.removeAttribute('hidden');
+            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+                fetch(`/list-movies?page=${pagina}`, {
+                    method: 'get'
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        loading.setAttribute('hidden', '');
+                        document.getElementById('movies').innerHTML += html;
+                        pagina++;
+                    })
+                    .catch(error => console.log(error))
+            }
+        }*/
 
         $('[data-plugin="pretty"]').each(function (a, e) {
             $(this).change(function () {
