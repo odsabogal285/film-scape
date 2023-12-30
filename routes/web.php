@@ -3,6 +3,7 @@
 use App\Http\Controllers\FavoriteMovieUserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\SerieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,9 @@ Route::get('/list-movies', [MovieController::class, 'listMovies'])->name('list-m
 Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
 Route::get('/list-recommendation', [RecommendationController::class, 'listRecommendation'])->name('list-recommendation');
 
+//Series
+Route::get('/series', [SerieController::class, 'index'])->name('series');
+Route::get('/list-series', [SerieController::class, 'listMovies'])->name('list-series');
 
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
