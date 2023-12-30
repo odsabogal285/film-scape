@@ -13,7 +13,7 @@ class TMBDService
         $this->token = config('apis.tmdb.TMDB_TOKEN');
     }
 
-    public  function discoverMovies ()
+    public function discoverMovies ()
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
@@ -23,7 +23,7 @@ class TMBDService
         return $response->object()->results;
     }
 
-    public  function discoverMoviesPage (Int $page)
+    public function discoverMoviesPage (Int $page)
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
@@ -31,5 +31,16 @@ class TMBDService
         ])->get($this->url."discover/movie?language=es&page=&page={$page}");
 
         return $response->object()->results;
+    }
+
+    public function trendingAll (string $time_window_day = 'day')
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.$this->token,
+            'accept' => 'application/json',
+        ])->get($this->url."trending/all/{$time_window_day}?language=es");
+
+        return $response->object()->results;
+
     }
 }

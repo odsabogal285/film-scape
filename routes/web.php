@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoriteMovieUserController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RecommendationController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
-Route::get('/list-movies', [RecommendationController::class, 'listMovies'])->name('list-movies');
 Route::post('/update-favorite', [RecommendationController::class, 'updateFavorite'])->name('update-favorite');
 Route::get('/favorite', [FavoriteMovieUserController::class, 'index'])->name('favorite');
+
+//Movies
+Route::get('/movies', [MovieController::class, 'index'])->name('movies');
+Route::get('/list-movies', [MovieController::class, 'listMovies'])->name('list-movies');
+
+//Recommendation
+Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
+Route::get('/list-recommendation', [RecommendationController::class, 'listRecommendation'])->name('list-recommendation');
+
 
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

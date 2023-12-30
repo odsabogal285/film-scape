@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Repositories\MovieFavoriteUserRepository;
 use App\Repositories\MovieRepository;
 use App\Repositories\UserRepository;
+use App\Services\MovieService;
 use App\Services\TMBDService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -20,75 +21,35 @@ class RecommendationController extends Controller
     private MovieRepository $movieRepository;
     private MovieFavoriteUserRepository $movieFavoriteUserRepository;
     private UserRepository $userRepository;
-    public function __construct(MovieRepository $movieRepository, MovieFavoriteUserRepository $movieFavoriteUserRepository, UserRepository $userRepository)
+    private MovieService $movieService;
+    private TMBDService $tmbdService;
+    public function __construct(UserRepository $userRepository, MovieService $movieService, TMBDService $tmbdService)
     {
-        $this->movieRepository = $movieRepository;
-        $this->movieFavoriteUserRepository = $movieFavoriteUserRepository;
         $this->userRepository = $userRepository;
+        $this->movieService = $movieService;
+        $this->tmbdService = $tmbdService;
     }
 
     public function index (Request $request)
     {
         try {
 
-            $tmdb =  new TMBDService;
-            $movies = $tmdb->discoverMovies();
+            $recommendations = $this->tmbdService->trendingAll();
+            //$movies = $this->movieService->validateMoviesList($movies);
 
-            // todo pasar esto a un servicio
-            $movies_query =  $this->movieRepository->getMoviesIds(collect($movies)->pluck('id'));
-            $movies_user=  $this->userRepository->getMovies(Auth::user());
-
-            foreach ($movies as $movie) {
-                $movies_query->where('id', $movie->id)->first();
-                if (!$movies_query->where('id', $movie->id)->first()) {
-                    $movie_repository = new Movie([
-                        'id' => $movie->id,
-                        'name' => $movie->title,
-                        'release_date' => $movie->release_date,
-                        'image' => $movie->poster_path,
-                        'qualification' => $movie->vote_average
-                    ]);
-                    $this->movieRepository->save($movie_repository);
-                }
-            }
-
-            if ($movies_user->count() > 0) {
-                foreach ($movies as $movie) {
-                    if ($movies_user->where('id', $movie->id)->first()) {
-                        $movie->checked = true;
-                    }
-                }
-            }
-
-            return view('films.recommendation.index', compact('movies'));
+            return view('films.recommendation.index', compact('recommendations'));
 
         } catch (\Exception $exception) {
             Log::error("Error index RC: {$exception->getMessage()} File: {$exception->getFile()} Line: {$exception->getLine()}");
         }
     }
 
-    public  function listMovies (Request $request)
+    public function listRecommendation (Request $request)
     {
         try {
-            $tmdb =  new TMBDService;
-            $movies = $tmdb->discoverMoviesPage($request->input('page'));
 
-            // todo pasar esto a un servicio
-            $movies_query = $this->movieRepository->getMoviesIds(collect($movies)->pluck('id'));
-
-            foreach ($movies as $movie) {
-                $movies_query->where('id', $movie->id)->first();
-                if (!$movies_query->where('id', $movie->id)->first()) {
-                    $movie_repository = new Movie([
-                        'id' => $movie->id,
-                        'name' => $movie->title,
-                        'release_date' => $movie->release_date,
-                        'image' => $movie->poster_path,
-                        'qualification' => $movie->vote_average
-                    ]);
-                    $this->movieRepository->save($movie_repository);
-                }
-            }
+            $movies = $this->tmbdService->discoverMoviesPage($request->input('page'));
+            $movies = $this->movieService->validateMoviesList($movies);
 
             return view('films.recommendation.movies', compact('movies'));
 
@@ -97,7 +58,7 @@ class RecommendationController extends Controller
         }
     }
 
-    public  function updateFavorite (Request $request)
+    public function updateFavorite (Request $request)
     {
         try {
 

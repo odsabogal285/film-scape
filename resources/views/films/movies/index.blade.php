@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Recomendaciones')
+@section('title', 'Peliculas')
 
 @section('content_header')
-    <h1>Recomendaciones</h1>
+    <h1>Peliculas</h1>
 @stop
 
 @push('css')
@@ -53,7 +53,7 @@
 
 @section('content')
     <div class="container-xl d-flex" id="movies" style="flex-wrap: wrap; justify-content: space-between;">
-        @include('films.recommendation.recommendation')
+        @include('films.movies.movies')
         <div id="loading" hidden>Cargando...</div>
     </div>
 @stop
@@ -61,12 +61,12 @@
 @push('js')
     <script>
         // Mirar como validar lo del data-type in l9
-       /*let pagina = 2;
+       let pagina = 2;
        const loading = document.getElementById('loading');
        window.onscroll = () => {
            loading.removeAttribute('hidden');
            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-               fetch(`/list-recommendation?page=${pagina}`, {
+               fetch(`/list-movies?page=${pagina}`, {
                   method: 'get'
                })
                    .then(response => response.text())
@@ -81,9 +81,9 @@
                                let $active = $(this).parent().parent().find('.active');
                                console.log(id, this, active, $active);
                                $.ajax({
-                                   url: `{{--{{route('update-favorite')}}--}}`,
+                                   url: `{{route('update-favorite')}}`,
                                    type: 'post',
-                                   headers: {'X-CSRF-TOKEN': '{{--{{csrf_token()}}--}}'},
+                                   headers: {'X-CSRF-TOKEN': '{{csrf_token()}}'},
                                    dataType: 'json',
                                    data: {id: id, active: active ? 1 : 0},
                                    success: function (response) {
@@ -102,7 +102,7 @@
                    })
                    .catch(error => console.log(error))
            }
-       }*/
+       }
 
         $('[data-plugin="pretty"]').each(function (a, e) {
             $(this).change(function () {

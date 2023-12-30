@@ -314,12 +314,12 @@ return [
         ],
         [
             'text' => 'Peliculas',
-            'url' => 'admin/movies',
+            'url' => 'movies',
             'icon' => 'fas fa-fw fa-video'
         ],
         [
             'text' => 'Series',
-            'url' => 'admin/series',
+            'url' => 'series',
             'icon' => 'fas fa-fw fa-film'
         ],
         ['header' => 'account_settings'],

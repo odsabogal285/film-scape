@@ -52,7 +52,7 @@
 @endpush
 
 @section('content')
-    <div class="container-xl d-flex" id="movies" style="flex-wrap: wrap; justify-content: space-between;">
+    <div class="container-xl d-flex" id="movies" style="flex-wrap: wrap;">
         @include('films.recommendation.movies')
         <div id="loading" hidden>Cargando...</div>
     </div>
