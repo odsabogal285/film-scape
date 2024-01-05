@@ -9,7 +9,7 @@ class Movie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'name', 'release_date', 'image', 'qualification'];
+    protected $fillable = ['id', 'title', 'release_date', 'image', 'qualification'];
     public $incrementing = false;
 
     public function users ()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use App\Repositories\UserRepository;
 use App\Services\MovieService;
 use App\Services\TMBDService;
@@ -46,6 +47,18 @@ class MovieController extends Controller
 
         } catch (\Exception $exception) {
             Log::error("Error listMovies RC: {$exception->getMessage()} File: {$exception->getFile()} Line: {$exception->getLine()}");
+        }
+    }
+
+    public function show (Request $request, Movie $movie)
+    {
+        try {
+
+            return view('films.movies.show', compact('movie'));
+
+        } catch (\Exception $exception) {
+            Log::error("Error show RC: {$exception->getMessage()} File: {$exception->getFile()} Line: {$exception->getLine()}");
+
         }
     }
 }

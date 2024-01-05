@@ -30,6 +30,7 @@ Route::get('/favorite', [FavoriteMovieUserController::class, 'index'])->name('fa
 //Movies
 Route::get('/movies', [MovieController::class, 'index'])->name('movies');
 Route::get('/list-movies', [MovieController::class, 'listMovies'])->name('list-movies');
+Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movie.show');
 
 //Recommendation
 Route::get('/recommendation', [RecommendationController::class, 'index'])->name('recommendation');
