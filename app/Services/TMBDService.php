@@ -38,9 +38,19 @@ class TMBDService
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
             'accept' => 'application/json',
-        ])->get($this->url."discover/movie?language=es&page=&page={$page}");
+        ])->get($this->url."discover/movie?language=es&page={$page}");
 
         return $response->object()->results;
+    }
+
+    public function movieDetails(Int $movie_id)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.$this->token,
+            'accept' => 'application/json',
+        ])->get($this->url."movie/{$movie_id}?language=es");
+
+        return $response->object();
     }
 
     public function discoverSeries ()
@@ -58,7 +68,7 @@ class TMBDService
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
             'accept' => 'application/json',
-        ])->get($this->url."discover/tv?language=es&page=&page={$page}");
+        ])->get($this->url."discover/tv?language=es&page={$page}");
 
         return $response->object()->results;
     }

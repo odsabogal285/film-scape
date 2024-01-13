@@ -54,7 +54,18 @@ class MovieController extends Controller
     {
         try {
 
-            return view('films.movies.show', compact('movie'));
+            $movie = $this->tmbdService->movieDetails($movie->id);
+
+            $genres = collect();
+            foreach ($movie->genres as $genre) {
+                $genres->push($genre->name);
+            }
+            $genres_name = implode(", ",$genres->toArray());
+            $horas = floor($movie->runtime/60);
+            $minutes= $movie->runtime%60;
+            $duration = $horas.'h '.($minutes>0?$minutes.'m':'');
+            //dd($movie, $genres_name);
+            return view('films.movies.show', compact('movie', 'genres_name', 'duration'));
 
         } catch (\Exception $exception) {
             Log::error("Error show RC: {$exception->getMessage()} File: {$exception->getFile()} Line: {$exception->getLine()}");

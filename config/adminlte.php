@@ -518,6 +518,26 @@ return [
                     'location' => '//unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.jss',
                 ],
             ],
+        ],
+        'CircleProgess' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'assets/libs/circle-progress/circle-progress.min.js'
+                ]
+            ]
+        ],
+        'ProgressBar' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'assets/libs/progress-bar/progressbar.js'
+                ]
+            ]
         ]
     ],
 
