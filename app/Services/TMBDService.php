@@ -53,6 +53,16 @@ class TMBDService
         return $response->object();
     }
 
+    public function creditsMovie(Int $movie_id)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.$this->token,
+            'accept' => 'application/json',
+        ])->get($this->url."movie/{$movie_id}/credits?language=es");
+
+        return $response->object();
+    }
+
     public function discoverSeries ()
     {
         $response = Http::withHeaders([

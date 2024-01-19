@@ -55,6 +55,22 @@ class MovieController extends Controller
         try {
 
             $movie = $this->tmbdService->movieDetails($movie->id);
+            $credits = $this->tmbdService->creditsMovie($movie->id);
+
+            $credits_director = collect($credits->crew)->where('job', 'Director')->values();
+            $credits_screenplay = collect($credits->crew)->where('job', 'Screenplay')->values();
+            $casts = collect($credits->cast)->take(9);
+
+            foreach ($credits_director as $director) {
+                foreach ($credits_screenplay as $key => $screenplay) {
+                    if($director->id == $screenplay->id) {
+                        $director->job = $director->job.', '.$screenplay->job;
+                        $credits_screenplay->forget($key);
+                    }
+                }
+            }
+
+            $credits_screenplay = $credits_screenplay->values();
 
             $genres = collect();
             foreach ($movie->genres as $genre) {
@@ -64,8 +80,9 @@ class MovieController extends Controller
             $horas = floor($movie->runtime/60);
             $minutes= $movie->runtime%60;
             $duration = $horas.'h '.($minutes>0?$minutes.'m':'');
-            //dd($movie, $genres_name);
-            return view('films.movies.show', compact('movie', 'genres_name', 'duration'));
+
+            return view('films.movies.show', compact('movie', 'genres_name', 'duration', 'credits_director', 'credits_screenplay',
+            'casts'));
 
         } catch (\Exception $exception) {
             Log::error("Error show RC: {$exception->getMessage()} File: {$exception->getFile()} Line: {$exception->getLine()}");

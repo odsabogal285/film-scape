@@ -80,6 +80,50 @@
             height: 70px;
             margin-top: 10px;
         }
+
+        ol.people {
+            margin-top: 20px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        ol.people.no_image li {
+            list-style-type: none;
+            list-style-position: inside;
+            width: 33%;
+            flex-basis: 33%;
+            text-align: left;
+            margin-bottom: 14px;
+            margin-right: 0;
+            box-sizing: border-box;
+            padding-right: 20px;
+            /*display: flex;*/
+           /* position: relative;
+            top: 0;
+            left: 0;*/
+        }
+
+        swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 
 @endpush
@@ -118,6 +162,30 @@
                             <div class="mt-1">
                                 <span>{{$movie->overview}}</span>
                             </div>
+                            <div class="mt-1" style="">
+                                <ol class="people no_image" style="display: flex; justify-content: start; padding: 0">
+                                    @foreach($credits_director as $director)
+                                        <li>
+                                            <p style="margin: 0">
+                                                <strong>{{$director->name}}</strong>
+                                            </p>
+                                            <p>
+                                                {{$director->job}}
+                                            </p>
+                                        </li>
+                                    @endforeach
+                                        @foreach($credits_screenplay as $screenplay)
+                                            <li >
+                                                <p style="margin: 0">
+                                                    <strong> {{$screenplay->name}}</strong>
+                                                </p>
+                                                <p>
+                                                    {{$screenplay->job}}
+                                                </p>
+                                            </li>
+                                        @endforeach
+                                </ol>
+                            </div>
                             {{--<div>
                                 <div id="circle">
                                     <strong>a</strong>
@@ -128,13 +196,59 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div>
+                        <h4>Reparto principal </h4>
+                        <swiper-container class="mySwiper" init="false">
+                            @foreach($casts as $cast)
+                                <swiper-slide>
+                                    {{--<img src="https://media.themoviedb.org/t/p/w138_and_h175_face/4VjjKw3Jzue37Y8Tm0hSWEWW1e2.jpg" alt="" width="150" height="150">--}}
+                                    @if($cast->profile_path)
+                                        <img src="https://image.tmdb.org/t/p/original/{{$cast->profile_path}}" alt="">
+                                    @else
+                                        <img src="https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg" alt="">
+                                    @endif
+                                    <p>
+                                        {{$cast->name}}
+                                    </p>
+                                </swiper-slide>
+                            @endforeach
+                        </swiper-container>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @stop
 
 @push('js')
     {{--<script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.5.6/dist/progressbar.js"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script>
+        const swiperEl = document.querySelector('swiper-container')
+        Object.assign(swiperEl, {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            pagination: {
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 6,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 7,
+                    spaceBetween: 50,
+                },
+            },
+        });
+        swiperEl.initialize();
         /*$('#circle').circleProgress({
             value: `{{--{{$movie->qualification/10}}--}}`,
             size: 80,
