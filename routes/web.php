@@ -4,6 +4,7 @@ use App\Http\Controllers\FavoriteMovieUserController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\SerieController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*

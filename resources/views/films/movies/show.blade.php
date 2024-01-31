@@ -80,6 +80,10 @@
             height: 70px;
             margin-top: 10px;
         }
+        
+        .progressbar-text {
+            color: black !important;
+        }
 
         ol.people {
             margin-top: 20px;
@@ -113,9 +117,7 @@
             font-size: 18px;
             background: #fff;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+            flex-direction: column;
         }
 
         swiper-slide img {
@@ -228,6 +230,7 @@
     <script>
         const swiperEl = document.querySelector('swiper-container')
         Object.assign(swiperEl, {
+            setWrapperSize: true,
             slidesPerView: 1,
             spaceBetween: 10,
             pagination: {
@@ -249,26 +252,29 @@
             },
         });
         swiperEl.initialize();
-        /*$('#circle').circleProgress({
-            value: `{{--{{$movie->qualification/10}}--}}`,
-            size: 80,
-            startAngle: 4.7,
-            fill: {
-                color: ["green"]
-            }
-        });*/
+
+        var color;
+        var trailColor;
 
         const vote_average = `{{$movie->vote_average}}`;
 
+        if (vote_average*10 >= 70) {
+            color = '#21d07a';
+            trailColor = '#20452970';
+        } else {
+            color = '#cfd230';
+            trailColor = '#403b0e70';
+        }
+
         var circle = new ProgressBar.Circle('#circle-bar', {
-            color: '#21d07a',
-            trailColor: '#20452970',
+            color: color,
+            trailColor: trailColor,
             strokeWidth: 6,
             trailWidth: 6,
             easing: 'easeInOut',
             duration: 1400,
-            from: {color: '#21d07a', width: 6},
-            to: {color: '#21d07a', width: 6},
+            from: {color: color, width: 6},
+            to: {color: color, width: 6},
             step: function (state, circle) {
                 circle.path.setAttribute('stroke', state.color);
                 circle.path.setAttribute('stroke-width', state.width);
